@@ -57,14 +57,22 @@ trade route, which will be the shortest-path between them.
 
 * _Boundary conditions:_ they will wrap West-East, but not North-South (can't cross the poles).
 * _Dimensionality:_ 2D.
-* _List of environment-owned variables:_  trade costs.
+* _List of environment-owned variables:_  trade costs, **t<sub>ij</sub>>=1** for all *i,j=1,...,N*
 * _List of environment-owned methods/procedures:_ trade costs will decrease exogenously and assymetrically in the map.
 
 ```python
-# Include first pass of the code you are thinking of using to construct your environment
-# This may be a set of "patches-own" variables and a command in the "setup" procedure, a list, an array, or Class constructor
-# Feel free to include any patch methods/procedures you have. Filling in with pseudocode is ok! 
-# NOTE: If using Netlogo, remove "python" from the markdown at the top of this section to get a generic code block
+# After creating the environment, I will locate the *N* countries on the grid randomly.
+# Then, the bilateral trade costs will be initially proportional to their location.
+def initialize():
+    global env, costs, nextcosts
+  
+    # Environment: world map
+    env = zeros([w, w])
+    
+    # Environment: trade costs
+    c = randint(1,10,size=(w,w))
+    costs = (c + c.T)/2 # Symmetric matrix
+    fill_diagonal(costs,1) # Symmetric matrix with ones in diag
 ```
 
 &nbsp; 
@@ -79,7 +87,7 @@ The agents in this model will be the **countries**, which are fixed in certain c
       * Wages, *w<sub>i</sub>*
       * Total expenditure in manufactured goods, *E<sub>i</sub>*
       * Price of representative manufacturing variety, *p<sub>ii</sub>*
-      * Number of manufacturing firms/varieties, *n<sub>i</sub>
+      * Number of manufacturing firms/varieties, *n<sub>i</sub>*
       
 * _List of agent-owned methods/procedures:_ Implicitly, each agent hosts a set of workers-consumers and firms, each of which maximizes
 its utility or profit, respectively, taking prices, wage, and **trade costs** as given. Moreover, these agents interact in free markets,
@@ -92,10 +100,31 @@ characterize the equilibrium in each country:
   * Zero-profit condition.
 
 ```python
-# Include first pass of the code you are thinking of using to construct your agents
-# This may be a set of "turtle-own" variables and a command in the "setup" procedure, a list, an array, or Class constructor
-# Feel free to include any agent methods/procedures you have so far. Filling in with pseudocode is ok! 
-# NOTE: If using Netlogo, remove "python" from the markdown at the top of this section to get a generic code block
+def initialize():
+    global agents
+    
+    # Agents: countries
+    agents = []
+    for i in xrange(n):
+        ag = agent()
+        ag.x = randint(w) # starts at a random position
+        ag.y = randint(w)
+        ag.q = ???  # Price index for manufactures (Q)
+        ag.newq = ag.q
+        ag.w = ??? # Equilibrium wage (w)
+        ag.neww = ag.w
+        ag.e = ??? # Total expenditure on manufactured goods (E)
+        ag.newe = ag.e
+        ag.exp = ??? # Manufacturing exports (x)
+        ag.newexp = ag.exp
+        ag.dom = ??? # Manufacturing domestic sales (y)
+        ag.newdom = ag.dom
+        ag.p = ??? # Optimal manufacturing representative price (p)
+        ag.newp = ag.p
+        ag.n = ??? # Number of manufacturing varieties/firms (n)
+        ag.newn = ag.n
+        ag.l = 27000000 # Populations (L) = Avg country-population in 2000
+        agents.append(ag)
 ```
 
 &nbsp; 
