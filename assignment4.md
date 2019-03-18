@@ -6,6 +6,9 @@ _Luis Espinoza_
 * Course Title: Computer Modeling of Complex Systems
 * Term: Winter, 2019
 
+Initialize the system with a fixed value for endogenous variables (w=1)
+Establish a range of admissible values for the other endogenous variables
+calculate
 
 
 &nbsp; 
