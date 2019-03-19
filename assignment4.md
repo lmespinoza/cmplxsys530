@@ -80,6 +80,8 @@ The agents in this model will be the **countries**, which are fixed in certain c
   * Optimal manufacturing pricing for the representative manufacturing firm.
   * Zero-profit condition.
 
+Unfortunately, I need to run the solver even for initializing the simulation. Since I don't know how to do that yet, I am leaving the initial values of the agent's characteristics blank ("???").
+
 ```python
 def initialize():
     global agents
