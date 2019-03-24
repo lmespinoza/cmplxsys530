@@ -18,6 +18,9 @@ Although the equation-based model (EBM) in the original paper can be solved (it 
 With this in mind, I plan to (1) extend their model to any (_N_) number of countries, (2) to explore the input-output space for some parameters, (3) to run simulations changing not only the trade costs but the populations to account for international migration.
 
 &nbsp; 
+
+__*LS COMMENTS:__ Excellent description of goals and argument for the use of ABM here.*
+
 ### Main Micro-level Processes and Macro-level Dynamics of Interest
 ****
 The model would work at two different levels. The first level is what happens *within* each country. Here, I won't be using an ABM approach, but a system of 5 equations (per country) that summarizes the utility and profit maximization by consumers and firms, respectively, and the equilibrium conditions in the markets. The second level is the *international* setting. This is where I will conduct exogenous changes on the bilateral trade costs among countries.
@@ -27,6 +30,9 @@ I am interested in two macro-level dynamics:
 * the utility dynamics of industrializing and de-industrializing countries as trade cost decrease/population migrate,
 
 &nbsp; 
+
+*__LS COMMENT__: Great. Very clear.*
+
 ## Model Outline
 ****
 ### 1) Environment
@@ -59,6 +65,8 @@ def initialize():
             else:
                 c[i,j] = 1
 ```
+
+*__LS COMMENT__: Excellent approach and very well-thought out simplification strategy.*
 
 &nbsp; 
 ### 2) Agents
@@ -110,14 +118,20 @@ def initialize():
         agents[i] = ag
 ```
 
+*__LS COMMENTS:__ I really like your design here. A couple of things: I assume you will not want agents to co-occupy the same cell? If so, then you'll need to address that in the x, y coordinates. It also looks like you will be using classes to create agents, which I think is a good idea in this case given the number of variables that will be attached to each. I'm not quite clear from this description how nations' trade relationships will be translated into inputs for agent procedures.*
+
 &nbsp; 
 ### 3) Action and Interaction 
 **_Interaction Topology_**
 All countries can potentially interact with any other country in the world. Hence, the interaction topology is the whole world.
+
+__*LS COMMENTS__: This could probably be characterized as a fully mixed system wherein interactions are weighted by distance between agents.*
  
 **_Action Sequence_**
 1. Step 1: The set of bilateral trade costs and/or the set of country populations are exogenously updated.
 2. Step 2: Each country *simultaneously* updates its five endogenous variables using the five equilibrium conditions. Since countries' endogeous variables are interrelated, I will use a nonlinear solver at each period.
+
+__*LS COMMENTS__: My only concern with this model involves how computationally intensive might end up being. If you run into issues in this arena, feel free to only look at lower values of N to start. I am sure you will be able to get interesting results with even a few countries considered.*
 
 &nbsp; 
 ### 4) Model Parameters and Initialization
@@ -213,3 +227,5 @@ There are two main features to keep track of:
 &nbsp; 
 ### 6) Parameter Sweep
 I am interested in playing with the four model parameters in greek letters.
+
+*__LS COMMENTS:__ Excellent proposal! Very clearly thought out, and I anticipate at this point that you will be able to have some solid, first pass results by the end of the term. Please let me know if you run into any issues at any point. 19.5/20*
